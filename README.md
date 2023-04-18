@@ -30,10 +30,10 @@ When testing this I mocked the external API on port 8081 that returns the list o
 ## Possible Future Enhancements & Iterations
 We may want to consider a Delete endpoint and scheduled job to clear the database after we have ordered the toppings the customers have submit.
 * Another option for this is to add a column that would indicate when the data is considered to be expired, since SQLite doesn't have built-in support for TTLs.
-    * This would line up with however frequently the ordering of toppings is done
+    * This would line up with however frequently the ordering of toppings is done.
 * We would want to consider another database that can be deployed and scaled independently if our data gets bigger.
-* Adding an additional table to store customer information along with their previous orders
+* Adding an additional table to store customer information along with their previous orders.
    * This could be used to personalize pizzas recommendations for returning customers, help with easy reorders, and increase 
 the accuracy of the 'unique count' of toppings since this app assumes that every new submission is a new customer when aggregating topping counts.
-   * However, this would require a mechanism to be able to delete this user data as well due to California's Consumer Privacy Act
+   * However, this would require a mechanism to be able to delete this user data as well due to California's Consumer Privacy Act.
 * Features for requesting sauces, and allowing customers to submit toppings we may not have yet.
