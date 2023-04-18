@@ -45,12 +45,6 @@ dependencies {
     implementation("org.apache.beam:beam-sdks-java-core:$beamVersion")
     implementation("org.apache.beam:beam-runners-direct-java:$beamVersion")
     implementation("org.apache.beam:beam-sdks-java-io-jdbc:$beamVersion")
-    //implementation("org.apache.beam:beam-runners-google-cloud-dataflow-java:$beamVersion")
-
-
-    // Testing
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.0.5")
 }
 application {
     mainClass.set("com.lisa.luk.Application")

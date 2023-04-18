@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-@RequestMapping("/v1/pizza")
-class PizzaPipelineController(
+@RequestMapping("/v1/toppings")
+class PipelinePublishController(
     private val pipelineOptions: PizzaPipelineOptions,
     private val toppingRepository: ToppingRepositorySqliteImpl
 ) {

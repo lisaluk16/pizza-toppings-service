@@ -1,66 +1,39 @@
-# Kotlin Bootstrap (base / project skeleton)
-
-[![Software License][ico-license]][link-license]
+# Pizza Toppings Service
 
 ## Introduction
 
-This is a repository intended to serve as a starting point if you want to bootstrap a project in Kotlin.
+This is a backend app that facilitates the publishing, aggregating and retrieving of pizza toppings and their corresponding
+count, unique by user and total, to help determine the number of toppings the business should order. 
+There are two parts of this app that facilitate this, a write side and a read side. 
 
-It could be useful if you want to start from scratch a kata or a little exercise or project. The idea is that you don't have to worry about the boilerplate
-* Latest stable kotlin version
-* Best practices applied:
-    * [`README.md`][link-readme]
-    * [`LICENSE`][link-license]
-    * [`build.gradle.kts`][link-build-gradle]
-    * [`.gitignore`][link-gitignore]
-* Some useful resources to start coding
+* Read side - under the com.lisa.luk.api package.
+   * Entry point is the `/api/v1/toppings` GET endpoint.
+   * This endpoint will call an in memory SQLite database and return a list of toppings & their counts, and the most popular and least popular toppings.
+* Write side - under the com.lisa.luk.pipeline package.
+   * Entry point is the `/api/v1/toppings/publish` GET endpoint.
+   * This endpoint will grab existing toppings & their counts from the SQLite database, and then call an external API built by 
+another team at Accumulus, and aggregate the data to update the toppings counts.
 
 ## How To Start
 
-You could manually clone [this repo](https://github.com/CodelyTV/kotlin-basic-skeleton) or just us it as a template
+You should be able to run the app without spinning up any other containers, since the SQLite database is embedded in the app.
+When testing this I mocked the external API on port 8081 that returns the list of tuples of user emails to their selected toppings.
 
-### Cloning the repository
+## Versions
+* [Spring Boot 3.0.5](https://www.baeldung.com/spring-boot-3-spring-6-new)
+* [Kotlin 1.8.0](https://kotlinlang.org/docs/whatsnew18.html)
+* [Java 17](https://www.oracle.com/java/technologies/javase/17-relnote-issues.html)
+* [Apache Beam 2.46.0](https://beam.apache.org/get-started/beam-overview/)
+* [SQLite JDBC 3.36.0.3](https://sqlite.org/index.html)
+* [Ktorm 3.3.0](https://github.com/kotlin-orm/ktorm)
 
-We recommend to follow the next step by step process in order to avoid adding the bootstrap project commits to your project Git history:
-
-1. [Use this repositoy template](https://github.com/CodelyTV/kotlin-basic-skeleton/generate)
-2. Clone your project
-3. Move to the project directory: `cd your-project-name`
-5. Build the project for the first time: `./gradlew build`
-6. Run all the checks: `./gradlew check`. This will do some checks that you can perform with isolated commands:
-    1. [Klint](https://ktlint.github.io/) using [Spotless](https://github.com/diffplug/spotless): `./gradlew spotlessCheck`. If you want to fix style issues automatically: `./gradlew spotlessApply`.
-    2. [Kotlin test](https://kotlinlang.org/api/latest/kotlin.test/): `./gradlew test`.
-7. To just run the project execute: `./gradlew run`
-7. Start coding!
-
-## Helpful resources
-
-### Kotlin
-
-* [Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html)
-* [Comparison between Kotlin and Java](https://kotlinlang.org/docs/comparison-to-java.html)
-
-### Kotlin test
-
-* [Test code using JUnit in JVM - tutorial](https://kotlinlang.org/docs/jvm-test-using-junit.html)
-* [JUnit5 assertions](https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html)
-
-
-## About
-
-This hopefully helpful utility has been developed by [CodelyTV][link-author] and [contributors][link-contributors].
-
-We'll try to maintain this project as simple as possible, but Pull Requests are welcome!
-
-## License
-
-The MIT License (MIT). Please see [License File][link-license] for more information.
-
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-
-[link-license]: LICENSE
-[link-readme]: README.md
-[link-gitignore]: .gitignore
-[link-build-gradle]: build.gradle.kts
-[link-author]: https://github.com/CodelyTV
-[link-contributors]: https://github.com/CodelyTV/kotlin-basic-skeleton/graphs/contributors
+## Possible Future Enhancements & Iterations
+We may want to consider a Delete endpoint and scheduled job to clear the database after we have ordered the toppings the customers have submit.
+* Another option for this is to add a column that would indicate when the data is considered to be expired, since SQLite doesn't have built-in support for TTLs.
+    * This would line up with however frequently the ordering of toppings is done
+* We would want to consider another database that can be deployed and scaled independently if our data gets bigger.
+* Adding an additional table to store customer information along with their previous orders
+   * This could be used to personalize pizzas recommendations for returning customers, help with easy reorders, and increase 
+the accuracy of the 'unique count' of toppings since this app assumes that every new submission is a new customer when aggregating topping counts.
+   * However, this would require a mechanism to be able to delete this user data as well due to California's Consumer Privacy Act
+* Features for requesting sauces, and allowing customers to submit toppings we may not have yet.

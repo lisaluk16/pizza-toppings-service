@@ -12,7 +12,7 @@ class ToppingExtractService : Serializable {
         existingToppingCounts: List<ToppingCount>
     ): MutableCollection<ToppingCount> {
 
-        // create a map of existing toppings to their counts so we can aggregate on the fly on the write side
+        // create a map of existing toppings to their counts so we can aggregate on the fly on the ingestion side instead of the serving side
         val existingToppingsMap = existingToppingCounts.associateBy { Topping.caseInsensitiveValueOf(it.name) }
 
         val toppingCountMap = mutableMapOf<Topping, ToppingCount>()
@@ -42,7 +42,7 @@ class ToppingExtractService : Serializable {
                         ToppingCount(
                             toppingValue.toppingName,
                             totalCount = existingToppingCount.totalCount + 1,
-                            existingToppingCount.uniqueCount + 1
+                            uniqueCount = existingToppingCount.uniqueCount + 1
                         )
                         // create a new instance if this is the first occurrence of the topping
                     } else ToppingCount(name = toppingValue.toppingName, totalCount = 1, uniqueCount = 1)

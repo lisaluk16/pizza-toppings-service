@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1")
-class PizzaController(private val pizzaService: PizzaServiceImpl) {
+class ApiController(private val pizzaService: PizzaServiceImpl) {
 
     @GetMapping("/toppings")
     fun retrieveToppingInformation(): ResponseEntity<ToppingInformation> {
