@@ -60,21 +60,3 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-spotless {
-    kotlin {
-        ktlint()
-            .userData(
-                mapOf(
-                    "insert_final_newline" to "true",
-                ),
-            )
-    }
-    kotlinGradle {
-        ktlint()
-    }
-}
-
-tasks.check {
-    dependsOn(tasks.spotlessCheck)
-}

@@ -3,7 +3,7 @@
 ## Introduction
 
 This is a backend app that facilitates the publishing, aggregating and retrieving of pizza toppings and their corresponding
-count, unique by user and total, to help determine the number of toppings the business should order. 
+counts, unique by user and total, to help determine the number of toppings the business should order. 
 There are two parts of this app that facilitate this, a write side and a read side. 
 
 * Read side - under the com.lisa.luk.api package.
@@ -28,7 +28,7 @@ When testing this I mocked the external API on port 8081 that returns the list o
 * [Ktorm 3.3.0](https://github.com/kotlin-orm/ktorm)
 
 ## Possible Future Enhancements & Iterations
-We may want to consider a Delete endpoint and scheduled job to clear the database after we have ordered the toppings the customers have submit.
+* We may want to consider a Delete endpoint and scheduled job to clear the database after we have ordered the toppings the customers have submit.
 * Another option for this is to add a column that would indicate when the data is considered to be expired, since SQLite doesn't have built-in support for TTLs.
     * This would line up with however frequently the ordering of toppings is done.
 * We would want to consider another database that can be deployed and scaled independently if our data gets bigger.
